@@ -1,0 +1,90 @@
+#apertura de archivos
+arch1 = open('calificaciones.txt','r')
+arch2 = open('aprobados.txt','w')
+arch3 = open('reprobados.txt','w')
+
+contenido = arch1.readlines()
+m = int(contenido[0])
+linea = 0
+cont_a1 = 0
+cont_secc = 0
+cont_aprov = 0
+cont_def_alta = 0
+
+for i in contenido:
+	lista_ext = contenido[linea].split(',')
+	linea += 1
+	asig = lista_ext[0]
+	prof = lista_ext[1]
+	secc = lista_ext[2]
+	n = int(lista_ext[3])
+	print('%s sección %s:' %(asig, secc))
+	
+	arch2.write('%s sección: %s:\n' %(asig, secc ))
+	arch3.write('%s sección: %s\n' %(asig, secc))
+	
+	acum_reprob = 0
+	cont_reprob = 0
+	estud_mayor = " "
+	def_mayor = 0
+	cont_mayor = 0
+		
+	for j in range(n):
+		lista_int = contenido[linea].split(',')
+		linea += 1
+		estud = lista_int[0]
+		cedula = lista_int[1]
+		p1 = int(lista_int[2])
+		p2 = int(lista_int[3])
+		p3 = int(lista_int[4])
+		definitiva = (p1*0.45)+(p2*0.25)+(p3*0.3)
+		if definitiva < 10:
+			arch3.write('%s %s %f \n' %(estud, cedula, definitiva))
+			acum_reprob += definitiva
+			cont_reprob += 1
+		else:
+			arch2.write('%s %s %i \n' %(estud, cedula, definitiva))
+		if definitiva == def_mayor:
+			estud_mayor = estud
+			cont_mayor += 1
+		elif def_mayor <= definitiva:
+			def_mayor = definitiva
+			estud_mayor = estud
+		else:
+			cont_mayor = 0
+	
+	# proceso del ciclo externo			
+		
+		prom = 0
+			
+		if p1>=10 or p2>=10 or p3>=10:
+			cont_a1 +=1
+		if definitiva >= 10:
+			cont_aprov += 1
+			if definitiva > 14:
+				cont_def_alta += 1
+		if cont_aprov == n:
+			ult_secc = secc
+			cont_secc += 1
+
+	if cont_reprob > 0:
+		prom = acum_reprob / cont_reprob
+	print('El promedio de los estudiantes reprobados es: %.2f' %prom)
+	if cont_mayor > 1:
+		print('El último estudiante con la mayor nota fué: %s, %i estudiantes tuvieron la misma calificación' %(estud_mayor, cont_mayor))
+	else:
+		print('El último estudiante con la mayor nota fué: %s \n \n' %estud_mayor)
+
+porc = cont_def_alta / cont_aprov * 100
+print('la cantidad de estudiantes que aprobaron almenos un parcial fué: ' + str(cont_a1))
+if cont_secc > 0:
+	print('la ultima sección con todos los estudiantes aprobados fué la sección: ' + ult_secc)
+else:
+	print('no hubo secciones con todos los estudiantes aprobados')
+print('el porcentaje de estudiantes con notas definitavas superiores a 14 respecto a los aprobados fué de: %.2f' %porc)
+
+#print(str(ult_secc))
+
+arch1.close()
+arch2.close()
+arch3.close()
