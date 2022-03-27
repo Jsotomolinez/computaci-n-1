@@ -1,3 +1,21 @@
+'''
+Problema: evaluando el rendimiento academico.
+
+se tiene un archivo de nombre "calificaciones.txt", el cual contiene una lista con los datos de un grupo de estudiantes y sus calificaciones.
+por sección se tiene:
+	Asignatura, profesor, sección y cantidad de estudiantes en la sección.
+y para cad asección se tiene:
+	Estudiante, cédula y la nota de 3 parciales.
+	
+El siguiente es un programa que lee la.información del archivo "calificaciones.txt" e imprime en los archivos: "aprobados.txt" y "reprobados.txt" la información de los estufiantes aprobados y reprobados respectivamente, además, para cada sección se imprimirá:
+	1. promedio de notas de los reprobados.	2. Estudiante con la mayor nota, si hay variosncon esa nota, indique el último estudiante y cuantos tienen esa nota.
+para todas las secciones se imprimirá:
+	3. cuantos estudiantes aprobaron almemos uno de los parciales
+	4. última sección con todos los estudiantes aprobados.
+	5. porcentaje de aprobados con notas definitivas mayores a 14 puntos respecto al total de estudiantes aprobados.
+'''
+
+
 #apertura de archivos
 arch1 = open('calificaciones.txt','r')
 arch2 = open('aprobados.txt','w')
