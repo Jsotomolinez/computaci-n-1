@@ -1,0 +1,37 @@
+'''
+Contraste de imagen en escala de grises
+El formato RGB perimte definir mediante 3 valores entre 0 y 255, los coeficientes de intensidad de rojo verde y azul para obtener un color específico. Los colores en la escala de grises tienen los 3 valores RGB iguales. Una imagen se presenta definiendo pixeles mediante una coordenada y un color. Para realizar los ajustes de una imagen y obtener sus contrastes en las zonas de escalas de grises, se calcula el coeficiente de intensidad mayor, de los colores en escala de grises y luego a cada pixel.en escala de grises se le calcula el coeficiente de intensidad de contrastes como la diferencia entre el valor de intensidad máximo calculado y el coeficiente de intensidad que registra el pixel.
+
+El siguiente programa lee del archivo "imagen.txt" que contiene, coordenada en x, coordenada en y coeficiente de intensidad. 
+El programa:
+	1. Determina el coeficiente de intensidad mayor en la imagen.
+	2. Crear el archivo "contraste.txt" que contenga por pixel: 
+	coordenad en x, coordenada en y coeficiente de intensidad de contraste.
+'''
+arch1 = open('imagen.txt','r')
+arch2 = open('contraste.txt','w')
+
+contenido = arch1.readlines()
+n = 0
+max_ci = 0
+
+for i in contenido:
+	linea = contenido[n].split(',')
+	n += 1
+	ci = int(linea[2])
+	if max_ci < ci:
+		max_ci = ci
+print('el mayor coeficiente de intensidad es: %d' %max_ci)
+
+n = 0
+for i in contenido:
+	linea = contenido[n].split(',')
+	n += 1
+	x = linea[0]
+	y = linea[1]
+	ci = int(linea[2])
+	cic = max_ci - ci
+	arch2.write('%s, %s, %i \n' %(x, y, cic))
+	
+arch1.close()
+arch2.close()
